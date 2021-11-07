@@ -8,6 +8,39 @@
     <title>My Weather Dashboard</title>
 </head>
 <body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main>
+        <aside>
+            <h2>Search for a City:</h2>
+            <div>
+                <form>
+                    <input type="text" placeholder="City" id="city">
+                    <button type="button" id="search">Search</button>
+                </form>
+                <div class="history">
+
+                </div>
+            </div>
+        </aside>
+        <section>
+            <div id="card-current-city">
+                <h2>Atlanta</h2>
+            </div>
+            <div class="forecast">
+                <h3>5-Day Forecast</h3>
+                <div class="cards">
+                    <div class="card" id="card-1">Card 1</div>
+                    <div class="card" id="card-2">Card 2</div>
+                    <div class="card" id="card-3">Card 3</div>
+                    <div class="card" id="card-4">Card 4</div>
+                    <div class="card" id="card-5">Card 5</div>
+                </div>
+            </div>
+        </section>
+    </main>    
+        
 
     <script src="./assets/js/script.js"></script>
 </body>

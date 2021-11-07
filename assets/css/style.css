@@ -1,0 +1,63 @@
+
+
+main {
+    display: flex;
+}
+
+aside {
+    border: 2px black solid;
+    width: 25%;
+    margin: 10px 0px;
+}
+
+section {
+    width: 75%;
+}
+
+form {
+    padding: 0px 5px;
+    display: inline-flex;
+    flex-direction: column;
+    width:97.5%;
+}
+
+h1 {
+    margin: 0 auto;
+    padding: 10px;
+}
+
+h2 {
+    padding: 0px 5px;
+    margin: 5px 0px;
+}
+.cards {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.card {
+    /* flex:0 1 24%; */
+    border: 2px black solid;
+    margin-right: 20px;
+    width: 20%;
+}
+
+.forecast {
+    margin: 10px 10px;
+}
+
+.history {
+    border-top: 2px gray solid;
+    margin: 10px;
+}
+
+#card-current-city {
+    border: 2px black solid;
+    margin: 10px 10px;
+}
+
+#search, #city {
+    margin: 5px 0px;
+}
+
