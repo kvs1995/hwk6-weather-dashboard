@@ -107,8 +107,8 @@ function initialFetchData() {
         currentCityEl.textContent = cityName
         currentDateEl.textContent = moment().format("MMMM Do, YYYY")
         currentTimeEl.textContent = moment().format("hh:mm:ss A")
-        sunriseEl.textContent = moment(weatherData.sys.sunrise, "x").format("h:mm A")
-        sunsetEl.textContent = moment(weatherData.sys.sunset, "x").format("h:mm A")
+        sunriseEl.textContent = "Sunrise: " + moment(weatherData.sys.sunrise, "x").format("h:mm A")
+        sunsetEl.textContent = "Sunset: " + moment(weatherData.sys.sunset, "x").format("h:mm A")
         
         highEl.textContent = 'High: '+ convertTemp(weatherData.main.temp_max) + '\u00B0 F'
         lowEl.textContent = 'Low: ' + convertTemp(weatherData.main.temp_min) + '\u00B0 F'

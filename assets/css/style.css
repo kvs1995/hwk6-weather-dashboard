@@ -27,9 +27,6 @@
     border: 5px solid orange;
 }
 
-#sunrise, #sunset, #current-degree, #current-icon, #high, #low, #current-wind, #current-uv-index, .forecast-degrees, .forecast-icon {
-    border: 5px solid red;
-}
 
 
 main {
