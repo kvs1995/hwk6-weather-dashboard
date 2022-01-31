@@ -43,7 +43,7 @@
 // }
 
 // button.addEventListener('click',fetchData)
-
+// const moment = require('moment')
 
 var cityInputEl = document.querySelector('#city')
 /////////////////// SEARCH HISTORY FUNCTIONALITY /////////////////////
@@ -71,9 +71,7 @@ function addHistory () {
     historyButton.setAttribute('type','button')
     historyButton.setAttribute('class', 'history-button')
     historyButton.textContent = cityName
-
-    searchHistoryEl.append(historyButton)
-
+    searchHistoryEl.prepend(historyButton)
     cityInputEl.value=''
 }
 
@@ -102,7 +100,16 @@ function initialFetchData() {
         var currentCityEl = document.querySelector('.current-title')
         var highEl = document.querySelector('#high')
         var lowEl = document.querySelector('#low')
+        var currentDateEl = document.querySelector('#current-date')
+        var currentTimeEl = document.querySelector('#current-time')
+        var sunriseEl = document.querySelector('#sunrise')
+        var sunsetEl=document.querySelector('#sunset')
         currentCityEl.textContent = cityName
+        currentDateEl.textContent = moment().format("MMMM Do, YYYY")
+        currentTimeEl.textContent = moment().format("hh:mm:ss A")
+        sunriseEl.textContent = moment(weatherData.sys.sunrise, "x").format("h:mm A")
+        sunsetEl.textContent = moment(weatherData.sys.sunset, "x").format("h:mm A")
+        
         highEl.textContent = 'High: '+ convertTemp(weatherData.main.temp_max) + '\u00B0 F'
         lowEl.textContent = 'Low: ' + convertTemp(weatherData.main.temp_min) + '\u00B0 F'
         fetchData(weatherData.coord.lon,  weatherData.coord.lat)
@@ -113,10 +120,10 @@ function initialFetchData() {
 }
 
 
-function fetchData(latitude, longitude) {
+function fetchData(longitude, latitude) {
     var cityLongitude = longitude
     var cityLatitude = latitude
-    // console.log(cityLongitude)
+    console.log(cityLongitude)
     var apiKey = '410bf7cb489396d2d3451160359de4e0'
     var requestURL='https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLatitude + '&lon=' + cityLongitude + '&appid=' + apiKey
     console.log(requestURL)
@@ -131,7 +138,11 @@ function fetchData(latitude, longitude) {
         var currentWindEl= document.querySelector('#current-wind')
         var currentHumidityEl = document.querySelector('#current-humidity')
         var currentUVIndexEl= document.querySelector('#current-uv-index')
-    
+        var weatherIconEl = document.querySelector('#current-icon')
+        var iconURL = 'http://openweathermap.org/img/w/' + weatherData.current.weather[0].icon + '.png'
+        console.log(iconURL)
+        weatherIconEl.setAttribute('src',iconURL)
+
 
         currentDegreeEl.textContent = 'Temp: ' + convertTemp(weatherData.current.temp) + '\u00B0 F'
         currentWindEl.textContent  = 'Wind: ' +  weatherData.current.wind_speed +' mph'
