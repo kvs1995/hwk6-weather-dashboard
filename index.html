@@ -1,46 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <title>My Weather Dashboard</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/jass.css"></link>
+  <link rel="stylesheet" href="assets/css/style.css"></link>
+  <title>5-Day Weather Forecast</title>
 </head>
 <body>
-    <header>
-        <h1>Weather Dashboard</h1>
-    </header>
-    <main>
-        <aside>
-            <h2>Search for a City:</h2>
-            <div>
-                <form>
-                    <input type="text" placeholder="City" id="city">
-                    <button type="button" id="search" id="search">Search</button>
-                </form>
-                <div class="history">
+  <header>
+    <h2>Weather Dashboard</h2>
+  </header>
 
-                </div>
-            </div>
-        </aside>
-        <section>
-            <div id="card-current-city">
-            </div>
-            <div class="forecast">
-                <h3>5-Day Forecast</h3>
-                <div class="cards">
-                    <div class="card" id="card-1">Card 1</div>
-                    <div class="card" id="card-2">Card 2</div>
-                    <div class="card" id="card-3">Card 3</div>
-                    <div class="card" id="card-4">Card 4</div>
-                    <div class="card" id="card-5">Card 5</div>
-                </div>
-            </div>
-        </section>
-    </main>    
-        
+  <main>
 
-    <script src="./assets/js/script.js"></script>
+    <aside class="search col-3">
+      <div class="search-section">
+          <form>
+            <input type="text" placeholder="Search for a City:" id="city">
+            <button type="button" id="search" id="search">Search</button>
+        </form>
+      </div>
+      <div class="search-history">Search History</div>
+    </aside>
+
+    <section class="main col-10">
+      Main
+      <div class="current">
+        Current
+
+        <div class="top-current">
+          Top Current
+          <div class="current-title">Current Title</div>
+          <div id="current-time">Current Time</div>
+        </div>
+
+        <div class="bottom-current">
+          Bottom Current
+          <div id="current-date">Current Date</div>
+          <div class="daynight">Day or Night</div>
+
+          <div class="current-info">
+            Current Info Box
+            <div class="current-degree-icon">
+              Current Degree Icon
+              <div id="current-degree">Current Degree</div>
+              <div id="current-icon">Current Icon</div>
+            </div>
+
+            <div class="sunset-sunrise">
+              Sunset Sunrise
+              <div id="sunrise">Sunrise</div>
+              <div id="sunset">Sunset</div>
+            </div>
+          </div>
+
+          <div class="current-info"> 
+            Current Info Box 2
+
+            <div class="high-low">
+              High-Low
+              <div id="high">High</div>
+              <div id="low">Low</div>
+            </div>
+
+            <div class="info-box">
+              Info Box
+              <div id="current-wind">Current Wind</div>
+              <div id="current-uv-index">Current UV Index</div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- <div class="forecast-cards"> 
+        Forecast Cards
+        <div class="cards" id="card-1">
+          Card 1
+          <h5 class="forecast-date" id="1" value=1>Card 1 Date</h5>
+          <div class="forecast-temp">
+            <p class="forecast-degrees" id="card-temp-1" value=1>Degrees</p>
+            <icon class="forecast-icon" id="card-icon-1" value=1>Icon</icon>
+          </div>
+          <p class="forecast-wind" id="forecast-wind-1" value=1></p>>Wind</p>
+          <p class="forecast-humidity" id="forecast-humidity-1" value=1>Humidity</p>
+        </div>
+        <div class="cards" id="card-2">
+          Card 2
+          <h5 class="forecast-date" id="2" value=2>Card 2 Date</h5>
+          <div class="forecast-temp">
+            <p class="forecast-degrees" id="card-temp-2" value=2>Degrees</p>
+            <icon class="forecast-icon" id="card-icon-2" value=2>Icon</icon>
+          </div>
+          <p class="forecast-wind" id="forecast-wind-2" value=2></p>>Wind</p>
+          <p class="forecast-humidity" id="forecast-humidity-2" value=2>Humidity</p>
+        </div>
+        <div class="cards" id="card-3">
+          Card 3
+          <h5 class="forecast-date" id="3" value=3>Card 3 Date</h5>
+          <div class="forecast-temp">
+            <p class="forecast-degrees" id="card-temp-3" value=3>Degrees</p>
+            <icon class="forecast-icon" id="card-icon-3" value=3>Icon</icon>
+          </div>
+          <p class="forecast-wind" id="forecast-wind-3" value=3></p>>Wind</p>
+          <p class="forecast-humidity" id="forecast-humidity-3" value=3>Humidity</p>
+        </div>
+        <div class="cards" id="card-4">
+          Card 4
+          <h5 class="forecast-date" id="4" value=4>Card 4 Date</h5>
+          <div class="forecast-temp">
+            <p class="forecast-degrees" id="card-temp-4" value=4>Degrees</p>
+            <icon class="forecast-icon" id="card-icon-4" value=4>Icon</icon>
+          </div>
+          <p class="forecast-wind" id="forecast-wind-4" value=4></p>>Wind</p>
+          <p class="forecast-humidity" id="forecast-humidity-4" value=4>Humidity</p>
+        </div>
+        <div class="cards" id="card-5">
+          Card 5
+          <h5 class="forecast-date" id="5" value=5>Card 5 Date</h5>
+          <div class="forecast-temp">
+            <p class="forecast-degrees" id="card-temp-5" value=5>Degrees</p>
+            <icon class="forecast-icon" id="card-icon-5" value=5>Icon</icon>
+          </div>
+          <p class="forecast-wind" id="forecast-wind-5" value=5></p>>Wind</p>
+          <p class="forecast-humidity" id="forecast-humidity-5" value=5>Humidity</p>
+        </div>
+      </div> -->
+    </section>
+
+  </main>
 </body>
 </html>

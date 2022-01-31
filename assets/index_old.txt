@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>My Weather Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main>
+        <aside>
+            <h2>Search for a City:</h2>
+            <div>
+                <form>
+                    <input type="text" placeholder="City" id="city">
+                    <button type="button" id="search" id="search">Search</button>
+                </form>
+                <div class="history">
+
+                </div>
+            </div>
+        </aside>
+        <section>
+            <div id="card-current-city">
+            </div>
+            <div class="forecast">
+                <h3>5-Day Forecast</h3>
+                <div class="cards">
+                    <div class="card" id="card-1">Card 1</div>
+                    <div class="card" id="card-2">Card 2</div>
+                    <div class="card" id="card-3">Card 3</div>
+                    <div class="card" id="card-4">Card 4</div>
+                    <div class="card" id="card-5">Card 5</div>
+                </div>
+            </div>
+        </section>
+    </main>    
+        
+
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
