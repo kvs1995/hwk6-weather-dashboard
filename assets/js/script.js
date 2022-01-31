@@ -45,12 +45,12 @@
 // button.addEventListener('click',fetchData)
 
 
-
+var cityInputEl = document.querySelector('#city')
 /////////////////// SEARCH HISTORY FUNCTIONALITY /////////////////////
 
 //when I search for a city in the input form field and click the button, the data is fetched from the URl with the filter. 
 
-var cityInputEl = document.querySelector('#city')
+
 
 //get access to the button 
 var searchButtonEl = document.querySelector('#search')
@@ -73,7 +73,77 @@ function addHistory () {
     historyButton.textContent = cityName
 
     searchHistoryEl.append(historyButton)
+
+    cityInputEl.value=''
 }
 
+//////////////////////////// FETCH API DATA FUNCTION ////////////////
+
+
+//create function to convert to Fahrenheit
+function convertTemp(temp) {
+    return Math.floor(((temp)-273.15) * (9/5) + 32)
+}
+
+//create function to fetch api button when button is click
+function initialFetchData() {
+    // console.log(cityInputEl.value)
+    var cityName = cityInputEl.value
+
+    var apiKey = '410bf7cb489396d2d3451160359de4e0'
+    var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + apiKey 
+//    console.log(requestURL)
+
+   fetch(requestURL)
+   .then(function(response) {
+       return response.json();
+   })
+   .then(function(weatherData) {
+        var currentCityEl = document.querySelector('.current-title')
+        var highEl = document.querySelector('#high')
+        var lowEl = document.querySelector('#low')
+        currentCityEl.textContent = cityName
+        highEl.textContent = 'High: '+ convertTemp(weatherData.main.temp_max) + '\u00B0 F'
+        lowEl.textContent = 'Low: ' + convertTemp(weatherData.main.temp_min) + '\u00B0 F'
+        fetchData(weatherData.coord.lon,  weatherData.coord.lat)
+
+
+    })
+
+}
+
+
+function fetchData(latitude, longitude) {
+    var cityLongitude = longitude
+    var cityLatitude = latitude
+    // console.log(cityLongitude)
+    var apiKey = '410bf7cb489396d2d3451160359de4e0'
+    var requestURL='https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLatitude + '&lon=' + cityLongitude + '&appid=' + apiKey
+    console.log(requestURL)
+
+    fetch(requestURL) 
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(weatherData) {
+
+        var currentDegreeEl = document.querySelector('#current-degree')
+        var currentWindEl= document.querySelector('#current-wind')
+        var currentHumidityEl = document.querySelector('#current-humidity')
+        var currentUVIndexEl= document.querySelector('#current-uv-index')
+    
+
+        currentDegreeEl.textContent = 'Temp: ' + convertTemp(weatherData.current.temp) + '\u00B0 F'
+        currentWindEl.textContent  = 'Wind: ' +  weatherData.current.wind_speed +' mph'
+        currentHumidityEl.textContent  = 'Humidity: ' + weatherData.current.humidity
+        currentUVIndexEl.textContent  = 'UV Index: ' +weatherData.current.uvi
+ 
+    })
+
+}
+searchButtonEl.addEventListener('click', initialFetchData)
 searchButtonEl.addEventListener('click', addHistory)
+
+
+
 
