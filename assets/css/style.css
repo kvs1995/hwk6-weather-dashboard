@@ -42,3 +42,7 @@ aside {
 .search-history {
     border-top: 2px solid black;
 }
+
+.forecast-cards {
+    display: flex;
+}
