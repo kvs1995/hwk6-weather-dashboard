@@ -88,83 +88,80 @@ function initialFetchData() {
        
         fetch(oneCallRequestURL) 
 
-            .then(function(response) {
-                return response.json();
-            })
-            
-            .then(function(oneCallWeatherData) {
-
-            //*********** CREATE ELEMENTS**********//
-                var currentDegreeEl = document.querySelector('#current-degree')
-                var currentWindEl= document.querySelector('#current-wind')
-                var currentHumidityEl = document.querySelector('#current-humidity')
-                var currentUVIndexEl= document.querySelector('#current-uv-index')
-                var weatherIconEl = document.querySelector('#current-icon')
-                var iconURL = 'http://openweathermap.org/img/w/' + oneCallWeatherData.current.weather[0].icon + '.png'
-
-
-            //*********** SET TEXT CONTENT OF EACH ELEMENT************//
-                weatherIconEl.setAttribute('src',iconURL)
-                currentDegreeEl.textContent = 'Temp: ' + convertTemp(oneCallWeatherData.current.temp) + '\u00B0 F'
-                currentWindEl.textContent  = 'Wind: ' +  oneCallWeatherData.current.wind_speed +' mph'
-                currentHumidityEl.textContent  = 'Humidity: ' + oneCallWeatherData.current.humidity
-                currentUVIndexEl.textContent  = 'UV Index: ' + oneCallWeatherData.current.uvi
+        .then(function(response) {
+            return response.json();
+        })
         
+        .then(function(oneCallWeatherData) {
 
-        /////////////////////////FORECASTED DAYS////////////////////////////////
-                var cardsEl=document.querySelector('.cards')
-                // console.log(cardsEl)
-                function setAttributeHelperFunction(targetEl, attributes){
-                    for (var keys in attributes) {
-                        targetEl.setAttribute(keys, attributes[keys])
-                    }};
+        //*********** CREATE ELEMENTS**********//
+            var currentDegreeEl = document.querySelector('#current-degree')
+            var currentWindEl= document.querySelector('#current-wind')
+            var currentHumidityEl = document.querySelector('#current-humidity')
+            var currentUVIndexEl= document.querySelector('#current-uv-index')
+            var weatherIconEl = document.querySelector('#current-icon')
+            var iconURL = 'http://openweathermap.org/img/w/' + oneCallWeatherData.current.weather[0].icon + '.png'
 
-                for (var i=0; i<5; i++) {
-                    var forecastDateEl = document.createElement('h5'); 
-                    var forecastTempEl = document.createElement('div');
-                    var forecastDegreeEl = document.createElement('p');
-                    var forecastIconEl = document.createElement('img');
-                    var forecastWindEl = document.createElement('p');
-                    var forecastHumidityEl = document.createElement('p');
-                    var forecastUVIndexEl = document.createElement('p');
-                    var forecastElList = [forecastDateEl,forecastTempEl,forecastDegreeEl,forecastIconEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl]
-                    var forecastTypeList = ["date","temp","degree","icon","wind","humidity","uv-index"]
 
-                    //for each element, assign the class name 'forecast' - type
-                    for (var j=0; j<forecastElList.length; j++) {
-                        var forecastClassName = "forecast-"+forecastTypeList[j]
-                        forecastElList[j].setAttribute("class",forecastClassName)
-                        if (forecastTypeList[j] === "icon"){
-                            var altContent = "Forecast Weather Icon: Day " + (i+1).toString();
-                            var iconURL = 'http://openweathermap.org/img/w/' + oneCallWeatherData.daily[i].weather[0].icon + '.png'
-                            forecastElList[j].setAttribute("src", iconURL)
-                            forecastElList[j].setAttribute("alt", altContent)
-                        }
+        //*********** SET TEXT CONTENT OF EACH ELEMENT************//
+            weatherIconEl.setAttribute('src',iconURL)
+            currentDegreeEl.textContent = 'Temp: ' + convertTemp(oneCallWeatherData.current.temp) + '\u00B0 F'
+            currentWindEl.textContent  = 'Wind: ' +  oneCallWeatherData.current.wind_speed +' mph'
+            currentHumidityEl.textContent  = 'Humidity: ' + oneCallWeatherData.current.humidity
+            currentUVIndexEl.textContent  = 'UV Index: ' + oneCallWeatherData.current.uvi
+    
+
+    /////////////////////////FORECASTED DAYS////////////////////////////////
+            var cardsEl=document.querySelector('.cards')
+            // console.log(cardsEl)
+            function setAttributeHelperFunction(targetEl, attributes){
+                for (var keys in attributes) {
+                    targetEl.setAttribute(keys, attributes[keys])
+                }};
+
+            for (var i=0; i<5; i++) {
+                var forecastDateEl = document.createElement('h5'); 
+                var forecastTempEl = document.createElement('div');
+                var forecastDegreeEl = document.createElement('p');
+                var forecastIconEl = document.createElement('img');
+                var forecastWindEl = document.createElement('p');
+                var forecastHumidityEl = document.createElement('p');
+                var forecastUVIndexEl = document.createElement('p');
+                var forecastElList = [forecastDateEl,forecastTempEl,forecastDegreeEl,forecastIconEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl]
+                var forecastTypeList = ["date","temp","degree","icon","wind","humidity","uv-index"]
+
+                //for each element, assign the class name 'forecast' - type
+                for (var j=0; j<forecastElList.length; j++) {
+                    var forecastClassName = "forecast-"+forecastTypeList[j]
+                    forecastElList[j].setAttribute("class",forecastClassName)
+                    if (forecastTypeList[j] === "icon"){
+                        var altContent = "Forecast Weather Icon: Day " + (i+1).toString();
+                        var iconURL = 'http://openweathermap.org/img/w/' + oneCallWeatherData.daily[i].weather[0].icon + '.png'
+                        forecastElList[j].setAttribute("src", iconURL)
+                        forecastElList[j].setAttribute("alt", altContent)
                     }
-                    
-                    //setting the weather data assignment from the API -- UNNECESSARY RIGHT NOW BUT COULD MAYBE BE USED FOR FOR LOOP
-                    var forecastWeatherData = {
-                        "date": moment(oneCallWeatherData.daily[i].dt, "X").format("MMM Do, YYYY"),
-                        "degree": convertTemp(oneCallWeatherData.daily[i].temp.day), 
-                        "wind": oneCallWeatherData.daily[i].wind_speed,
-                        "humidity": oneCallWeatherData.daily[i].humidity,
-                        "uvindex": oneCallWeatherData.daily[i].uvi,
-                    }
-
-                    //potentially set to for loop?
-                    forecastDateEl.textContent = forecastWeatherData.date
-                    forecastDegreeEl.textContent = forecastWeatherData.degree + ' \u00B0F'
-                    forecastWindEl.textContent = forecastWeatherData.wind
-                    forecastHumidityEl.textContent = forecastWeatherData.humidity
-                    forecastUVIndexEl.textContent = forecastWeatherData.uvindex
-                    forecastTempEl.append(forecastDegreeEl, forecastIconEl)
-                    cardsEl.append(forecastDateEl,forecastTempEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl)
-
-
-
-                    
                 }
-            })
+                
+                //setting the weather data assignment from the API -- UNNECESSARY RIGHT NOW BUT COULD MAYBE BE USED FOR FOR LOOP
+                var forecastWeatherData = {
+                    "date": moment(oneCallWeatherData.daily[i].dt, "X").format("MMM Do, YYYY"),
+                    "degree": convertTemp(oneCallWeatherData.daily[i].temp.day), 
+                    "wind": oneCallWeatherData.daily[i].wind_speed,
+                    "humidity": oneCallWeatherData.daily[i].humidity,
+                    "uvindex": oneCallWeatherData.daily[i].uvi,
+                }
+
+                //potentially set to for loop?
+                forecastDateEl.textContent = forecastWeatherData.date
+                forecastDegreeEl.textContent = forecastWeatherData.degree + ' \u00B0F'
+                forecastWindEl.textContent = forecastWeatherData.wind
+                forecastHumidityEl.textContent = forecastWeatherData.humidity
+                forecastUVIndexEl.textContent = forecastWeatherData.uvindex
+                forecastTempEl.append(forecastDegreeEl, forecastIconEl)
+                cardsEl.append(forecastDateEl,forecastTempEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl)
+
+            }
+        })
     })
 
 }
