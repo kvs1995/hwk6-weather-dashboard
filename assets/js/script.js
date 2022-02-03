@@ -123,7 +123,7 @@ function initialFetchData() {
         console.log(cityLongitude)
 
         var apiKey = '410bf7cb489396d2d3451160359de4e0'
-        var oneCallRequestURL='https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLatitude + '&lon=' + cityLongitude + '&appid=' + apiKey
+        var oneCallRequestURL='https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLatitude + '&lon=' + cityLongitude +  "&dt=" + moment() +'&appid=' + apiKey
         fetch(oneCallRequestURL) 
             .then(function(response) {
                 return response.json();
@@ -136,7 +136,7 @@ function initialFetchData() {
                 var currentUVIndexEl= document.querySelector('#current-uv-index')
                 var weatherIconEl = document.querySelector('#current-icon')
                 var iconURL = 'http://openweathermap.org/img/w/' + oneCallWeatherData.current.weather[0].icon + '.png'
-                console.log(iconURL)
+                // console.log(iconURL)
                 weatherIconEl.setAttribute('src',iconURL)
 
 
@@ -148,13 +148,13 @@ function initialFetchData() {
 
                 //////////////////////FORECASTED DAYS//////////////////////
                 var cardsEl=document.querySelector('.cards')
-                
+                // console.log(cardsEl)
                 function setAttributeHelperFunction(targetEl, attributes){
                     for (var keys in attributes) {
-                        targetEl.setAttribute(keys, attributes[key])
-                    };
+                        targetEl.setAttribute(keys, attributes[keys])
+                    }};
 
-                console.log("hit line 157")
+                // console.log("hit line 157")
                 //for each element, execute set Attribute for each attribute
                 for (var i=0; i<5; i++) {
                     var forecastDateEl = document.createElement('h5'); 
@@ -167,37 +167,60 @@ function initialFetchData() {
                     var forecastElList = [forecastDateEl,forecastTempEl,forecastDegreeEl,forecastIconEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl]
                     var forecastTypeList = ["date","temp","degree","icon","wind","humidity","uv-index"]
 
-                    console.log("hit line 168")
+                    // console.log("hit line 168")
                     for (var j=0; j<forecastElList.length; j++) {
                         var forecastClassName = "forecast-"+forecastTypeList[j]
                         forecastElList[j].setAttribute("class",forecastClassName)
                         if (forecastTypeList[j] === "icon"){
                             var altContent = "Forecast Weather Icon: Day " + (i+1).toString();
-                            forecastElList[j].setAttribute("src",oneCallWeatherData.daily[j].weather[0].icon)
+                            var iconURL = 'http://openweathermap.org/img/w/' + oneCallWeatherData.daily[i].weather[0].icon + '.png'
+                            forecastElList[j].setAttribute("src", iconURL)
                             forecastElList[j].setAttribute("alt", altContent)
                         }
                     }
-                    console.log("hit line 177")
+                    // console.log(i)
                     // "X").format("h:mm a")
                     // convertTemp(oneCallWeatherData.daily[i].temp)
                     var forecastWeatherData = {
-                        "date": moment(oneCallWeatherData.daily[i].dt,"X").format("h:mm a"),
-                        "degree": convertTemp(oneCallWeatherData.daily[i].temp), 
+                        "date": moment(oneCallWeatherData.daily[i].dt, "X").format("MMM Do, YYYY"),
+                        "degree": convertTemp(oneCallWeatherData.daily[i].temp.day), 
                         "wind": oneCallWeatherData.daily[i].wind_speed,
-                        "humidity": oneCallWeatherData.daily[i].wind_speed,
-                        "uv-index": oneCallWeatherData.daily[i].weather.uvi
+                        "humidity": oneCallWeatherData.daily[i].humidity,
+                        "uvindex": oneCallWeatherData.daily[i].uvi,
                     }
-                    console.log(forecastWeatherData)
-                    // for (var m = 0; m <  forecastWeatherData.length; m++) {
-                    //     if 
-
+                    // var momentDate = moment(forecastWeatherData.date, "X").format("MMMM Do, YYYY")
+                    // console.log(momentDate)
+                    // console.log(momentDate)
+                    // for (var k=0; k<forecastWeatherData.length; k++) {
+                    //     for (var m=0; m<forecastTypeList.length; m++) {
+                    //         if (forecastWeatherData[k] == forecastTypeList[m]) {
+                    //             var targetValEl = forecastWeatherData[k].value
+                    //             var targetEl = 'forecast' + forecastTypeList[m] + 'El'
+                    //             targetEl.textContent = targetValEl 
+                    //             console.log(targetEl)
+                    //         }
+                    //     }
+                    
                     // }
+                    
 
+                    forecastDateEl.textContent = forecastWeatherData.date
+                    forecastDegreeEl.textContent = forecastWeatherData.degree + ' \u00B0F'
+                    forecastWindEl.textContent = forecastWeatherData.wind
+                    forecastHumidityEl.textContent = forecastWeatherData.humidity
+                    forecastUVIndexEl.textContent = forecastWeatherData.uvindex
+                    forecastTempEl.append(forecastDegreeEl, forecastIconEl)
+                    // forecastDegreeEl.append(forecastIconEl)
+                    cardsEl.append(forecastDateEl,forecastTempEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl)
+
+
+
+                    
                 }
-            }
+            })
     })
 
-})}
+}
 
 searchButtonEl.addEventListener('click', initialFetchData)
 searchButtonEl.addEventListener('click', addHistory)
