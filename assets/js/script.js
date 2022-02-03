@@ -9,26 +9,7 @@ var cityInputEl = document.querySelector('#city')
 
 //get access to the button 
 var searchButtonEl = document.querySelector('#search')
-
-
-
-//when the button to search is selected, that city is added to the search history as a button to go back to
-
-//grab where the city history will be added to
-var searchHistoryEl = document.querySelector('.search-history')
-
-function addHistory () {
-    console.log(cityInputEl.value)
-    var cityName = cityInputEl.value
-
-    //create button to add into search-history
-    var historyButton = document.createElement('button');
-    historyButton.setAttribute('type','button')
-    historyButton.setAttribute('class', 'history-button')
-    historyButton.textContent = cityName
-    searchHistoryEl.prepend(historyButton)
-    cityInputEl.value=''
-}
+var cardsEl=document.querySelector('.cards')
 
 //////////////////////////// FETCH API DATA FUNCTION ////////////////
 
@@ -41,6 +22,8 @@ function convertTemp(temp) {
 //create function to fetch api button when button is click
 function initialFetchData() {
     // console.log(cityInputEl.value)
+
+    cardsEl.innerHTML = ''
     var cityName = cityInputEl.value
 
     var apiKey = '410bf7cb489396d2d3451160359de4e0'
@@ -112,7 +95,7 @@ function initialFetchData() {
     
 
     /////////////////////////FORECASTED DAYS////////////////////////////////
-            var cardsEl=document.querySelector('.cards')
+
             // console.log(cardsEl)
             function setAttributeHelperFunction(targetEl, attributes){
                 for (var keys in attributes) {
@@ -154,9 +137,9 @@ function initialFetchData() {
                 //potentially set to for loop?
                 forecastDateEl.textContent = forecastWeatherData.date
                 forecastDegreeEl.textContent = forecastWeatherData.degree + ' \u00B0F'
-                forecastWindEl.textContent = forecastWeatherData.wind
-                forecastHumidityEl.textContent = forecastWeatherData.humidity
-                forecastUVIndexEl.textContent = forecastWeatherData.uvindex
+                forecastWindEl.textContent = "Wind: " + forecastWeatherData.wind
+                forecastHumidityEl.textContent ="Humidity: " + forecastWeatherData.humidity
+                forecastUVIndexEl.textContent = "UV Index: " + forecastWeatherData.uvindex
                 forecastTempEl.append(forecastDegreeEl, forecastIconEl)
                 cardsEl.append(forecastDateEl,forecastTempEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl)
 
@@ -167,4 +150,4 @@ function initialFetchData() {
 }
 
 searchButtonEl.addEventListener('click', initialFetchData)
-searchButtonEl.addEventListener('click', addHistory)
+module.exports = initialFetchData
