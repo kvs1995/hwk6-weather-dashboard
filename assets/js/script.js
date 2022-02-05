@@ -2,8 +2,37 @@ var searchHistoryEl = document.querySelector('.search-history')
 var cityInputEl = document.querySelector('.city')
 var searchButtonEl = document.querySelector('#search')
 var cardsEl=document.querySelector('.cards')
-var searchHistoryList = []
+var searchHistoryList = JSON.parse(localStorage.getItem('search-history'))
+///////// get History - initial load of the hisotry buttons in the side panels.//////////// 
+// console.log(searchHistoryList)
+if (searchHistoryList) {
+    getHistory();
+}
 
+function getHistory() {
+    console.log("line 13")
+    for (var i = 0; i < searchHistoryList; i++) {
+        var historyButtonEl = document.createElement('button')
+        historyButtonEl.setAttribute('class','history-button')
+        historyButtonEl.textContent = city
+        searchHistoryEl.prepend(historyButtonEl)
+        //when clicked it will run the same function that would run if a history button were clicked that is already there. 
+        historyButtonEl.addEventListener("click", selectCity)
+        console.log("button made at 21 going to selectCity")
+    }
+}
+
+
+//// selectCity(event) -- calls fetch data with the whatever the history or selected city is. 
+
+function selectCity(event) {
+    event.preventDefault()
+    var targetCity = this.textContent
+    console.log("line 31 will it work?" + targetCity)
+    // fetchData(targetCity)
+    //in the for loop to grab the history from local storage, the function prepends the button so must remove
+    // searchHistoryEl.removeChild(targetCity)
+}
 
 //////////////////////////// FETCH API DATA FUNCTION ////////////////
 
@@ -18,9 +47,10 @@ function fetchData(city) {
     // console.log(city)
     // cardsEl.innerHTML = ''
 
-    var cityName = cityInputEl.value
+    var inputCity = cityInputEl.value
+    var searchCity = city || cityInputEl.value
     var apiKey = '410bf7cb489396d2d3451160359de4e0'
-    var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey 
+    var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchCity + '&appid=' + apiKey 
 
    fetch(requestURL)
 
@@ -115,7 +145,8 @@ function fetchData(city) {
             }
 
             //////////////////////INITIATE HISTORY ADDITION//////////////////
-            
+
+            addHistory(searchCity)
         })
     })
 }
@@ -151,7 +182,7 @@ function fetchData(city) {
 
 
 ///////// Add New City Function - called at the end of fetch data and selectCity /////
-function addNewCity(city) {
+function addHistory(city) {
     var historyButtonEl = document.createElement('button')
     historyButtonEl.setAttribute('class','history-button')
     historyButtonEl.textContent = city
@@ -165,14 +196,6 @@ function addNewCity(city) {
 
 }
 
-//// selectCity(event) -- calls fetch data with the whatever the history or selected city is. 
-
-function selectCity(event) {
-    event.preventDefault()
-    var targetCity = this.textContent
-    fetchData(targetCity)
-    searchHistoryEl.removeChild(targetCity)
-}
 
 searchButtonEl.addEventListener('click', fetchData)
 searchButtonEl.addEventListener('click', addHistory)
