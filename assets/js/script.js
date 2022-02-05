@@ -1,9 +1,11 @@
 var searchHistoryEl = document.querySelector('.search-history')
+// var searchHistoryAll = document.querySelectorAll('.search-history button')
 var cityInputEl = document.querySelector('.city')
 var searchButtonEl = document.querySelector('#search')
 var cardsEl=document.querySelector('.cards')
 var clearButtonEl = document.querySelector('.clear-history')
 var searchHistoryList = []
+
 ///////// get History - initial load of the hisotry buttons in the side panels.//////////// 
 
 if (JSON.parse(localStorage.getItem('search-history'))) {
@@ -172,8 +174,17 @@ function addHistory(city) {
 
     // add to the local storage by stringifyingt he searchhistorylist after adding the new city
     searchHistoryList.push(city)
-    localStorage.setItem('search-history', JSON.stringify(searchHistoryList))
+    console.log(searchHistoryList)
+    if (searchHistoryList.length >= 11) {
+        console.log(searchHistoryList.length)
+        searchHistoryList.shift()
+        searchHistoryEl.innerHTML=''
 
+        // localStorage.removeItem('search-history', JSON.stringify)
+    }
+    console.log(searchHistoryList)
+    localStorage.setItem('search-history', JSON.stringify(searchHistoryList))
+    getHistory()
 }
 
 function clearHistory() {
