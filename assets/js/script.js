@@ -2,6 +2,7 @@ var searchHistoryEl = document.querySelector('.search-history')
 var cityInputEl = document.querySelector('.city')
 var searchButtonEl = document.querySelector('#search')
 var cardsEl=document.querySelector('.cards')
+var clearButtonEl = document.querySelector('.clear-history')
 var searchHistoryList = []
 ///////// get History - initial load of the hisotry buttons in the side panels.//////////// 
 
@@ -9,6 +10,7 @@ if (JSON.parse(localStorage.getItem('search-history'))) {
     searchHistoryList = JSON.parse(localStorage.getItem('search-history'))
     getHistory();
 }
+
 // getHistory();
 function getHistory() {
     console.log("line 13")
@@ -47,9 +49,10 @@ function convertTemp(temp) {
 //create function to fetch api button when button is click
 function fetchData(city) {
     // console.log(city)
-    // cardsEl.innerHTML = ''
+    cardsEl.innerHTML = ''
 
     var inputCity = cityInputEl.value
+    cityInputEl.value = ''
     var searchCity = inputCity || city
     var apiKey = '410bf7cb489396d2d3451160359de4e0'
     var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchCity + '&appid=' + apiKey 
@@ -73,7 +76,7 @@ function fetchData(city) {
             var cityLongitude = weatherData.coord.lon
             var cityLatitude = weatherData.coord.lat
         //////////// SET TEXT CONTENT OF EACH ELEMENT/////////////
-            currentCityEl.textContent = city
+            currentCityEl.textContent = searchCity
             currentDateEl.textContent = moment().format("MMMM Do, YYYY")
             currentTimeEl.textContent = moment().format("h:mm:ss a")
             sunriseEl.textContent = "Sunrise: " + moment(weatherData.sys.sunrise, "X").format("h:mm a")
@@ -157,32 +160,6 @@ function fetchData(city) {
 
 /////////////////// SEARCH HISTORY FUNCTIONALITY /////////////////////
 
-//when the button to search is selected, that city is added to the search history as a button to go back to
-
-//grab where the city history will be added to
-
-
-// function addHistory () {
-
-//     //for each element in the of the local storage list, create a button with the history-button class, and set text Content of the button to the list at index i 
-//     //add button to the top of the search history aside
-//     //add eventListener for selectCity(event) that will remove the button from the button or wherever it is in the list in local storage
-
-//     console.log(cityInputEl.value)
-//     var cityName = cityInputEl.value
-
-//     //create button to add into search-history
-//     var historyButton = document.createElement('input');
-//     historyButton.setAttribute('type','button')
-//     historyButton.setAttribute('class', 'city')
-//     historyButton.setAttribute('id', cityName)
-//     historyButton.setAttribute('value', cityName)
-//     // historyButton.innerText= cityName
-//     searchHistoryEl.prepend(historyButton)
-//     console.log(historyButton)
-//     cityInputEl.value=''
-// }
-
 
 ///////// Add New City Function - called at the end of fetch data and selectCity /////
 function addHistory(city) {
@@ -199,6 +176,9 @@ function addHistory(city) {
 
 }
 
-
+function clearHistory() {
+    localStorage.clear('search-history')
+    searchHistoryEl.innerHTML = ''
+}
 searchButtonEl.addEventListener('click', fetchData)
-// searchButtonEl.addEventListener('click', addHistory)
+clearButtonEl.addEventListener('click', clearHistory)
