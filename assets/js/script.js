@@ -2,19 +2,21 @@ var searchHistoryEl = document.querySelector('.search-history')
 var cityInputEl = document.querySelector('.city')
 var searchButtonEl = document.querySelector('#search')
 var cardsEl=document.querySelector('.cards')
-var searchHistoryList = JSON.parse(localStorage.getItem('search-history'))
+var searchHistoryList = []
 ///////// get History - initial load of the hisotry buttons in the side panels.//////////// 
-// console.log(searchHistoryList)
-if (searchHistoryList) {
+
+if (JSON.parse(localStorage.getItem('search-history'))) {
+    searchHistoryList = JSON.parse(localStorage.getItem('search-history'))
     getHistory();
 }
-
+// getHistory();
 function getHistory() {
     console.log("line 13")
-    for (var i = 0; i < searchHistoryList; i++) {
+    console.log(searchHistoryList[0])
+    for (var i = 0; i < searchHistoryList.length; i++) {
         var historyButtonEl = document.createElement('button')
         historyButtonEl.setAttribute('class','history-button')
-        historyButtonEl.textContent = city
+        historyButtonEl.textContent = searchHistoryList[i]
         searchHistoryEl.prepend(historyButtonEl)
         //when clicked it will run the same function that would run if a history button were clicked that is already there. 
         historyButtonEl.addEventListener("click", selectCity)
@@ -29,9 +31,9 @@ function selectCity(event) {
     event.preventDefault()
     var targetCity = this.textContent
     console.log("line 31 will it work?" + targetCity)
-    // fetchData(targetCity)
+    fetchData(targetCity)
     //in the for loop to grab the history from local storage, the function prepends the button so must remove
-    // searchHistoryEl.removeChild(targetCity)
+    searchHistoryEl.removeChild(this)
 }
 
 //////////////////////////// FETCH API DATA FUNCTION ////////////////
@@ -48,7 +50,7 @@ function fetchData(city) {
     // cardsEl.innerHTML = ''
 
     var inputCity = cityInputEl.value
-    var searchCity = city || cityInputEl.value
+    var searchCity = inputCity || city
     var apiKey = '410bf7cb489396d2d3451160359de4e0'
     var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchCity + '&appid=' + apiKey 
 
@@ -108,7 +110,7 @@ function fetchData(city) {
 
             /////////////////////////FORECASTED DAYS////////////////////////////////
 
-            for (var i=0; i<5; i++) {
+            for (var i=1; i<5; i++) {
                 var forecastDateEl = document.createElement('h5'); 
                 var forecastTempEl = document.createElement('div');
                 var forecastDegreeEl = document.createElement('p');
@@ -134,7 +136,8 @@ function fetchData(city) {
                 //setting the weather data assignment from the API
 
                 //potentially set to for loop?
-                forecastDateEl.textContent = moment(forecastData.daily[i].dt, "X").format("MMM Do, YYYY")
+                var date =forecastData.daily[i].dt + 1
+                forecastDateEl.textContent = moment(date, "X").format("MMM Do, YYYY")
                 forecastDegreeEl.textContent = convertTemp(forecastData.daily[i].temp.day) + ' \u00B0F'
                 forecastWindEl.textContent = "Wind: " + forecastData.daily[i].wind_speed
                 forecastHumidityEl.textContent ="Humidity: " + forecastData.daily[i].humidity
@@ -145,7 +148,7 @@ function fetchData(city) {
             }
 
             //////////////////////INITIATE HISTORY ADDITION//////////////////
-
+            console.log(searchCity)
             addHistory(searchCity)
         })
     })
@@ -190,7 +193,7 @@ function addHistory(city) {
     //when clicked it will run the same function that would run if a history button were clicked that is already there. 
     historyButtonEl.addEventListener("click", selectCity)
 
-    //add to the local storage by stringifyingt he searchhistorylist after adding the new city
+    // add to the local storage by stringifyingt he searchhistorylist after adding the new city
     searchHistoryList.push(city)
     localStorage.setItem('search-history', JSON.stringify(searchHistoryList))
 
@@ -198,4 +201,4 @@ function addHistory(city) {
 
 
 searchButtonEl.addEventListener('click', fetchData)
-searchButtonEl.addEventListener('click', addHistory)
+// searchButtonEl.addEventListener('click', addHistory)
