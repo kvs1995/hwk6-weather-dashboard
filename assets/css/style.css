@@ -4,50 +4,232 @@
 
 * {
     margin: 0 auto;
-}
-
-
-.search, .main{
-    border: 5px solid blue;
-}
-
-.search-section,  .current {
-    border: 5px solid green;
-}
-
-.top-current, .bottom-current, .forecast-cards {
-    border: 5px solid lightgreen;
-}
-
-.current-title, #current-time, #current-date, .daynight, .current-info, .cards {
-    border: 5px solid yellow;
-}
-
-.current-degree-icon, .sunset-sunrise, .high-low, .info-box, .forecast-date, .forecast-temp, .forecast-wind, .forecast-humidity {
-    border: 5px solid orange;
+    
 }
 
 
 
 main {
-    border: 5px solid black;
     display: flex;
     padding: 1rem;
+    
 }
-
+body {
+    background-color:azure;
+}
 aside {
     padding: 1rem;
 }
 
-.search-history {
-    border-top: 2px solid black;
+header {
+    background-image: linear-gradient(to bottom right, rgb(30,9,68), rgb(31,85,178));
+    text-align: center;
+    padding: 1rem;
+    color: white;
+
 }
 
+header h1 {
+    font-size: 3rem;
+}
+
+/*/////////// SEARCH FOR CITY //////////////*/
+
+form {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 50px;
+    flex-direction: column;
+
+}
+input, #search {
+
+    padding: 5px;
+    outline: none;
+    background-color: transparent;
+    border:none;
+}
+::placeholder {
+    color: rgb(4,74,162);
+}
+
+input {
+    padding: 1rem;
+    border: 2px solid rgb(30,9,68);
+    color: rgb(17,58,137) !important; 
+    font-size: 2rem;
+    line-height: 2.5rem;
+}
+
+#search {
+    padding: 1rem;
+    border-radius: 30px;
+    background-color: rgb(142,126,229);
+    margin-top: 1rem;
+    color: aliceblue;
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+    font-weight: bold;
+}
+
+.search-history {
+    display: flex;
+    flex-direction: column;
+    margin: 7px;
+    border-top: 5px solid rgb(30,9,68);
+
+}
+
+.history-button {
+    line-height: 3rem;
+    border: none;
+    background-color: transparent;
+    color: rgb(30,9,68);
+    border-bottom: 3px solid rgb(30,9,68);
+    font-size: 1.5rem;
+    font-weight: bold;
+    
+}
+
+.search-history button:hover{ 
+    background-color: rgb(4,74,162);
+    /* border-radius: 15px; */
+    color:aliceblue;
+} 
+
+.clear-history {
+    display:flex;
+    background-color: rgb(142,126,229);
+    width: 100%;
+    border-radius: 50px;
+    color: aliceblue;
+    text-align: center;
+
+}
+
+.clear-history a {
+    color: aliceblue;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+}
+
+.current, .individual-card {
+    background-image: linear-gradient(to bottom right, rgb(30,9,68), rgb(31,85,178));
+    border-radius: 15px;
+    margin: 0 2rem;
+    color:aliceblue;
+    box-shadow: 0px 5px 5px 0px black;
+    padding: 1rem;
+}
+.individual-card {
+    margin:0.5rem;
+    width:100%;
+}
 .forecast-cards {
     display: flex;
+    justify-content: space-around;
+    margin: 1rem;
 }
 
-/* .cards {
-    display: flex;
-} */
+.title {
+    font-size: 2.5rem;
+}
 
+.current-title {
+    border-left: 2px solid white;
+    padding-left: 1rem;
+    font-weight: bold;
+    color: rgb(142,126,229);
+}
+
+.title a {
+    text-decoration: none;
+    color: white;
+    padding-right: 1rem;
+}
+
+#current-time {
+    font-size: 1.5rem !important;
+    line-height: 1.5rem;
+    padding-top: 0.25rem;
+}
+
+.bottom-current {
+    padding: 1rem 0;
+}
+
+#current-date {
+    font-size: 2rem;
+    
+}
+
+.current-top{
+    display:flex;
+}
+.current-degree-icon {
+    display: flex;
+    margin: 0;
+
+    width: 20%;
+}
+
+#current-degree {
+    font-size: 3.5rem;
+}
+
+#current-icon {
+    max-width:100%;
+    object-fit:cover;
+    justify-self: flex-start;
+    margin: 0rem 1rem;
+
+}
+
+.sunset-sunrise {
+    margin:0 !important;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#sunrise, #sunset {
+    align-self: center;
+    font-size: 1.5rem;
+}
+#sunrise {
+    padding-top: 0.5rem;
+}
+#sunset{
+    padding-bottom: 0.5rem;
+}
+
+.current-info {
+    display:flex;
+    border:2px solid rgb(30,9,68);
+    border-radius: 10px;
+    /* padding: 0.5rem; */
+    background-color: rgb(142,126,229,0.45);
+
+}
+
+.high-low, .info-box {
+
+    font-size: 1.5rem;
+    justify-content:space-evenly;
+    display:flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0.5rem;
+    
+}
+
+.high-low {
+    margin-left: 1rem;
+    border-right: 2px solid rgb(30,9,68);
+}
+
+.info-box {
+    margin-left: 1rem;
+}
+#high, #low, #current-wind, #current-humidity, #current-uv-index {
+    margin: 0.25rem;
+}

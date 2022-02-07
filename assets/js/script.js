@@ -102,7 +102,7 @@ function fetchData(city) {
 
             //*********** SET TEXT CONTENT OF EACH ELEMENT************//
             weatherIconEl.setAttribute('src',iconURL)
-            currentDegreeEl.textContent = 'Temp: ' + convertTemp(forecastData.current.temp) + '\u00B0 F'
+            currentDegreeEl.textContent = convertTemp(forecastData.current.temp) + '\u00B0 F'
             currentWindEl.textContent  = 'Wind: ' +  forecastData.current.wind_speed +' mph'
             currentHumidityEl.textContent  = 'Humidity: ' + forecastData.current.humidity
             currentUVIndexEl.textContent  = 'UV Index: ' + forecastData.current.uvi
@@ -121,7 +121,7 @@ function fetchData(city) {
                 var forecastUVIndexEl = document.createElement('p');
                 var forecastElList = [forecastDateEl,forecastTempEl,forecastDegreeEl,forecastIconEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl]
                 var forecastTypeList = ["date","temp","degree","icon","wind","humidity","uv-index"]
-
+                individualCardEl.setAttribute('class', 'individual-card')
                 //for each element, assign the class name 'forecast' - type
                 for (var j=0; j<forecastElList.length; j++) {
                     var forecastClassName = "forecast-"+forecastTypeList[j]
@@ -153,7 +153,9 @@ function fetchData(city) {
             console.log(searchCity)
             if (!searchHistoryList.includes(searchCity)) {
                 addHistory(searchCity)
-            }
+            } 
+        
+        
 
         })
     })
