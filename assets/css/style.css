@@ -166,18 +166,20 @@ input {
 .current-top{
     display:flex;
 }
-.current-degree-icon, .forecast-temp {
+.current-degree-icon {
     display: flex;
     margin: 0;
-
-    width: 20%;
+    padding-right: 1rem;
+    width: 30%;
 }
 
 .forecast-temp {
     width: 100%;
+    display: flex;
+    margin: 0;
 }
 #current-degree {
-    font-size: 3.5rem;
+    font-size: 3rem;
 }
  .forecast-degree {
      font-size:2.5rem;
