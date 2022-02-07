@@ -1,8 +1,6 @@
-# hwk6-weather-dashboard
+# Super Simple Weather
 
-# 06 Server-Side APIs: Weather Dashboard
-
-## Your Task
+## Description
 
 A nice and simple weather dashboard that presents you with basic information on the upcoming forecast of the searched city. The application allows you to search for multiple cities, while keeping the previous ones stored so you can go back with just a click of a button!
 
