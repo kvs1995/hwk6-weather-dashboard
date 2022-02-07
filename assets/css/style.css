@@ -179,10 +179,10 @@ input {
     margin: 0;
 }
 #current-degree {
-    font-size: 3rem;
+    font-size: 2rem;
 }
  .forecast-degree {
-     font-size:2.5rem;
+     font-size:2rem;
  }
 
 #current-icon{
@@ -192,7 +192,7 @@ input {
     max-width:100%;
     object-fit:cover;
     justify-self: flex-start;
-    margin: 0rem 1rem;
+    margin: 0rem 0.25rem;
 
 }
 
