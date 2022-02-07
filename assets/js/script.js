@@ -107,8 +107,29 @@ function fetchData(city) {
             currentWindEl.textContent  = 'Wind: ' +  forecastData.current.wind_speed +' mph'
             currentHumidityEl.textContent  = 'Humidity: ' + forecastData.current.humidity
             currentUVIndexEl.textContent  = 'UV Index: ' + forecastData.current.uvi
+        
+            // change the background color depnding on the uVindex
+            var currentEl = document.querySelector('.current')
+            var currentInfoEl = document.querySelector('.current-info')
+            if (forecastData.current.uvi < 3) {
+                currentEl.style.backgroundImage = "linear-gradient(to bottom right, rgb(30,106,94), rgb(82,149,75))"
+                currentInfoEl.style.backgroundColor ="rgb(30,106,94)"
+                currentCityEl.style.color="rgb(26,47,46)"
+                currentUVIndexEl.style.color = "rgb(26,47,46)"
+            } if (forecastData.current.uvi >= 3 && forecastData.current.uvi <= 5) {
+                currentEl.style.backgroundImage = "linear-gradient(to bottom right, rgb(242,217,116), rgb(241,200,46))"
+                currentInfoEl.style.backgroundColor ="rgb(241,200,46)"
+                currentCityEl.style.color="darkgoldenrod"
 
+                currentUVIndexEl.style.color = "darkgoldenrod"
+            } if (forecastData.current.uvi > 5) {
+                currentEl.style.backgroundImage = "linear-gradient(to bottom right, rgb(158,5,14),rgb(239,64,59))"
+                currentInfoEl.style.backgroundColor = "rgb(239,64,59)"
+                currentCityEl.style.color="maroon"
+                currentUVIndexEl.style.color = "maroon"
+            }
 
+            
             /////////////////////////FORECASTED DAYS////////////////////////////////
 
             for (var i=1; i<6; i++) {
