@@ -2,29 +2,26 @@ var searchHistoryEl = document.querySelector('.search-history')
 // var searchHistoryAll = document.querySelectorAll('.search-history button')
 var cityInputEl = document.querySelector('.city')
 var searchButtonEl = document.querySelector('#search')
-var cardsEl=document.querySelector('.cards')
+var cardsEl=document.querySelector('.forecast-cards')
 var clearButtonEl = document.querySelector('.clear-history')
 var searchHistoryList = []
-
+var grabLocalStorage = JSON.parse(localStorage.getItem('search-history'))
+// var localStorageEl = JSON.stringify("search-hisotory")
 ///////// get History - initial load of the hisotry buttons in the side panels.//////////// 
 
-if (JSON.parse(localStorage.getItem('search-history'))) {
-    searchHistoryList = JSON.parse(localStorage.getItem('search-history'))
+if (grabLocalStorage) {
+    searchHistoryList = grabLocalStorage
     getHistory();
 }
 
 // getHistory();
 function getHistory() {
-    console.log("line 13")
-    console.log(searchHistoryList[0])
     for (var i = 0; i < searchHistoryList.length; i++) {
         var historyButtonEl = document.createElement('button')
         historyButtonEl.setAttribute('class','history-button')
         historyButtonEl.textContent = searchHistoryList[i]
         searchHistoryEl.prepend(historyButtonEl)
-        //when clicked it will run the same function that would run if a history button were clicked that is already there. 
         historyButtonEl.addEventListener("click", selectCity)
-        console.log("button made at 21 going to selectCity")
     }
 }
 
@@ -34,10 +31,8 @@ function getHistory() {
 function selectCity(event) {
     event.preventDefault()
     var targetCity = this.textContent
-    console.log("line 31 will it work?" + targetCity)
     fetchData(targetCity)
-    //in the for loop to grab the history from local storage, the function prepends the button so must remove
-    searchHistoryEl.removeChild(this)
+
 }
 
 //////////////////////////// FETCH API DATA FUNCTION ////////////////
@@ -115,7 +110,8 @@ function fetchData(city) {
 
             /////////////////////////FORECASTED DAYS////////////////////////////////
 
-            for (var i=1; i<5; i++) {
+            for (var i=1; i<6; i++) {
+                var individualCardEl = document.createElement('div')
                 var forecastDateEl = document.createElement('h5'); 
                 var forecastTempEl = document.createElement('div');
                 var forecastDegreeEl = document.createElement('p');
@@ -148,13 +144,17 @@ function fetchData(city) {
                 forecastHumidityEl.textContent ="Humidity: " + forecastData.daily[i].humidity
                 forecastUVIndexEl.textContent = "UV Index: " + forecastData.daily[i].uvi
                 forecastTempEl.append(forecastDegreeEl, forecastIconEl)
-                cardsEl.append(forecastDateEl,forecastTempEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl)
-
+                
+                individualCardEl.append(forecastDateEl,forecastTempEl,forecastWindEl,forecastHumidityEl,forecastUVIndexEl)
+                cardsEl.append(individualCardEl)
             }
 
             //////////////////////INITIATE HISTORY ADDITION//////////////////
             console.log(searchCity)
-            addHistory(searchCity)
+            if (!searchHistoryList.includes(searchCity)) {
+                addHistory(searchCity)
+            }
+
         })
     })
 }
@@ -174,22 +174,16 @@ function addHistory(city) {
 
     // add to the local storage by stringifyingt he searchhistorylist after adding the new city
     searchHistoryList.push(city)
-    console.log(searchHistoryList)
-    if (searchHistoryList.length >= 11) {
-        console.log(searchHistoryList.length)
-        searchHistoryList.shift()
-        searchHistoryEl.innerHTML=''
 
-        // localStorage.removeItem('search-history', JSON.stringify)
-    }
-    console.log(searchHistoryList)
     localStorage.setItem('search-history', JSON.stringify(searchHistoryList))
-    getHistory()
+    
 }
 
 function clearHistory() {
     localStorage.clear('search-history')
     searchHistoryEl.innerHTML = ''
+    searchHistoryList = []
 }
+
 searchButtonEl.addEventListener('click', fetchData)
 clearButtonEl.addEventListener('click', clearHistory)
