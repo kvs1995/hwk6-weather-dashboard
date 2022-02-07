@@ -61,7 +61,7 @@ function fetchData(city) {
         })
 
         .then(function(weatherData) {
-
+            
         //////////CREATE ELEMENTS//////////////
             var currentCityEl = document.querySelector('.current-title')
             var highEl = document.querySelector('#high')
@@ -73,6 +73,7 @@ function fetchData(city) {
             var cityLongitude = weatherData.coord.lon
             var cityLatitude = weatherData.coord.lat
         //////////// SET TEXT CONTENT OF EACH ELEMENT/////////////
+
             currentCityEl.textContent = searchCity
             currentDateEl.textContent = moment().format("MMMM Do, YYYY")
             currentTimeEl.textContent = moment().format("h:mm:ss a")
@@ -99,7 +100,7 @@ function fetchData(city) {
             var weatherIconEl = document.querySelector('#current-icon')
             var iconURL = 'http://openweathermap.org/img/w/' + forecastData.current.weather[0].icon + '.png'
 
-
+            weatherIconEl.style.visibility = "visible"
             //*********** SET TEXT CONTENT OF EACH ELEMENT************//
             weatherIconEl.setAttribute('src',iconURL)
             currentDegreeEl.textContent = convertTemp(forecastData.current.temp) + '\u00B0 F'
@@ -133,7 +134,7 @@ function fetchData(city) {
                         forecastElList[j].setAttribute("alt", altContent)
                     }
                 }
-                
+            
                 //setting the weather data assignment from the API
 
                 //potentially set to for loop?
